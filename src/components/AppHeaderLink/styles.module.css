@@ -1,0 +1,12 @@
+.link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 18px 20px;
+}
+
+.link:hover {
+  cursor: pointer;
+}

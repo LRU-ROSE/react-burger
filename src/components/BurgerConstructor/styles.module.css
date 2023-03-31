@@ -1,1 +1,41 @@
+.constructor {
+  padding-bottom: 52px;
+  height: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template:
+    "." 1fr
+    "burger" auto
+    "." 1fr
+    "footer" auto;
+}
 
+.burger {
+  grid-area: burger;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.burger, .components {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 16px;
+}
+
+.components {
+  height: 100%;
+  overflow-y: scroll;
+  min-height: 80px;
+}
+
+.totalPrice, .footer {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.footer {
+  grid-area: footer;
+  justify-self: end;
+}
