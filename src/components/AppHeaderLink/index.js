@@ -1,12 +1,10 @@
 import { ProfileIcon, ListIcon, BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 import { combineClasses } from '../../utils';
 
 import cs from './styles.module.css';
 
-const AppHeaderLink = ({ text, href, iconName, active: initActive = false, className }) => {
-  const [active, setActive] = useState(initActive);
+const AppHeaderLink = ({ text, href, iconName, active = false, className = null }) => {
   const iconType = active ? 'primary' : 'secondary';
   let iconEl;
   switch (iconName) {
@@ -25,7 +23,7 @@ const AppHeaderLink = ({ text, href, iconName, active: initActive = false, class
       break;
   }
   return (
-    <a href={href} className={combineClasses(cs.link, className)} onMouseEnter={() => setActive(true)} onMouseLeave={() => setActive(initActive)}>
+    <a href={href} className={combineClasses(cs.link, className)}>
       {iconEl}
       <p className={`text text_type_main-default${ active ? '' : ' text_color_inactive'}`}>
         {text}
@@ -38,8 +36,8 @@ AppHeaderLink.propTypes = {
   iconName: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   href: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  active: PropTypes.bool,
+  className: PropTypes.string, // Необязателен
+  active: PropTypes.bool, // Необязателен (если атрибут отсутствует, значит он равен false)
 };
 
 export default AppHeaderLink;

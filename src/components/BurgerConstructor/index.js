@@ -14,15 +14,22 @@ const BurgerConstructor = () => {
   }, [showModal]);
   const { totalPrice, bun, components, removeIngredient } = useBurgerModifier();
 
-  const componentsEls = components.map((componentId, idx) => <BurgerComponent id={componentId} key={componentId + idx} onDelete={() => removeIngredient(idx)} />);
+  let burger = '...';
+  if (bun) {
+    const componentsEls = components.map((componentId, idx) => <BurgerComponent id={componentId} key={componentId + idx} onDelete={() => removeIngredient(idx)} />);
+    burger = <>
+      <BurgerComponent id={bun} type='top' />
+      <div className={cs.components}>
+        {componentsEls}
+      </div>
+      <BurgerComponent id={bun} type='bottom' />
+    </>;
+  }
+
   return (
-    <div className={combineClasses('pt-25 pl-4', cs.constructor)}>
+    <section className={combineClasses('pt-25 pl-4', cs.constructor)}>
       <div className={cs.burger}>
-        <BurgerComponent id={bun} type='top' />
-        <div className={cs.components}>
-          {componentsEls}
-        </div>
-        <BurgerComponent id={bun} type='bottom' />
+        {burger}
       </div>
       <div className={combineClasses('mt-10 mr-4', cs.footer)}>
         <div className={combineClasses('mr-10', cs.totalPrice)}>
@@ -31,7 +38,7 @@ const BurgerConstructor = () => {
         </div>
         <Button htmlType='button' type='primary' size='large' onClick={showInfo}>Оформить заказ</Button>
       </div>
-    </div>
+    </section>
   );
 };
 

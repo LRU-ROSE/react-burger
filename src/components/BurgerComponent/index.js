@@ -37,8 +37,8 @@ const BurgerComponent = ({ id, type, onDelete }) => {
 
 BurgerComponent.propTypes = {
   id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  type: PropTypes.string, // Необязателен (undefined или null означает что компонент является начинкой или соусом)
+  onDelete: PropTypes.func, // Необязателен ("булки" не могут быть удалены)
 };
 
 export default BurgerComponent;

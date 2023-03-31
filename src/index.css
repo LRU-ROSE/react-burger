@@ -15,6 +15,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  display: flex;
+  flex-flow: column nowrap;
+
+  max-height: 100vh;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }

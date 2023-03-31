@@ -19,16 +19,15 @@ const ModalProvider = ({children}) => {
     setModalInfo(null);
   }, []);
 
-  const context = useMemo(() => ({ showModal}), [showModal]);
+  const context = useMemo(() => ({showModal}), [showModal]);
 
   return (
     <ModalContext.Provider value={context}>
       {children}
-      <ModalOverlay onClose={closeModal} visible={Boolean(modalInfo)}>
-        <Modal onClose={closeModal} title={modalInfo?.title}>
-          {modalInfo?.el}
-        </Modal>
-      </ModalOverlay>
+      <ModalOverlay onClose={closeModal} visible={Boolean(modalInfo)}/>
+      <Modal onClose={closeModal} title={modalInfo?.title ?? ''} visible={Boolean(modalInfo)}>
+        {modalInfo?.el}
+      </Modal>
     </ModalContext.Provider>
   );
 };

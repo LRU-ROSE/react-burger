@@ -10,12 +10,11 @@ const getJson = (res) => {
     return res.json();
   }
 
-  throw new Error(`Ошибка (${res.status}): ${res.statusText}`);
+  return Promise.reject(new Error(`Ошибка (${res.status}): ${res.statusText}`));
 };
 
-export const getIngredients = (abortSignal) => {
+export const getIngredients = () => {
   return fetch(config.url, {
     headers: config.headers,
-    signal: abortSignal,
   }).then(getJson);
 };

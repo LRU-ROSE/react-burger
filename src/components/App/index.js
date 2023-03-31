@@ -4,29 +4,25 @@ import BurgerProvider from '../../providers/BurgerProvider';
 import ModalProvider from '../../providers/ModalProvider';
 import AppHeader from '../AppHeader';
 import ConstructorPage from '../ConstructorPage';
-import cs from './styles.module.css';
 
 const App = () => {
   const [ingredients, setIngredients] = useState(null);
   useEffect(() => {
-    const abort = new AbortController();
-    getIngredients(abort.signal)
-      .then(val => setIngredients(val.data))
-      .catch((e) => {
-        if (e.name === 'AbortError') {
-          return;
+    let aborted = false;
+    getIngredients()
+      .then(val => {
+        if (!aborted) {
+          setIngredients(val.data);
         }
-        console.log(`Ошибка загрузки компонентов: ${e}`)
-      });
-    return () => abort.abort();
+      })
+      .catch((e) => console.log(`Ошибка загрузки компонентов: ${e}`));
+    return () => { aborted = true; };
   }, [])
   return (
     <BurgerProvider ingredients={ingredients}>
       <ModalProvider>
-        <div className={cs.root}>
-          <AppHeader />
-          <ConstructorPage />
-        </div>
+        <AppHeader />
+        <ConstructorPage />
       </ModalProvider>
     </BurgerProvider>
   );
