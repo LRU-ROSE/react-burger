@@ -5,10 +5,10 @@ import { combineClasses } from '../../utils';
 import cs from './styles.module.css';
 
 const IngredientDetails = ({id}) => {
-  const { name, image, calories, proteins, fat, carbohydrates } = useIngredientById(id);
+  const { name, image_large, calories, proteins, fat, carbohydrates } = useIngredientById(id);
   return (
     <div className={cs.details}>
-      <img src={image} alt={name} className={cs.image}/>
+      <img src={image_large} alt={name} className={cs.image}/>
       <h3 className={combineClasses('text text_type_main-medium mt-4', cs.name)}>{name}</h3>
       <div className={combineClasses('mt-8', cs.table)}>
         <div className={cs.column}>
