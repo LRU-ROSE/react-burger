@@ -21,8 +21,19 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LRU-ROSE/react-burger.git"
+  },
+  "author": "Maksim Rose",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LRU-ROSE/react-burger/issues"
+  },
+  "homepage": "https://LRU-ROSE.github.io/react-burger",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -42,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^5.0.0",
     "prop-types": "^15.8.1"
   }
 }
