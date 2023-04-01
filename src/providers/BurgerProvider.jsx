@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useReducer, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Ingredient from '../types/Ingredient';
 
 const initData = {
   ingredients: {
@@ -141,7 +142,7 @@ const BurgerProvider = ({ ingredients, children }) => {
 };
 
 BurgerProvider.propTypes = {
-  ingredients: PropTypes.array,
+  ingredients: PropTypes.arrayOf(Ingredient.isRequired), // Необязательный - при инициализации их может не быть
 };
 
 export default BurgerProvider;
