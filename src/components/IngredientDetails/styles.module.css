@@ -1,0 +1,34 @@
+.details {
+  padding: 0 60px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.image {
+  width: 480px;
+  height: 240px;
+  object-fit: cover;
+}
+
+.name {
+  text-align: center;
+}
+
+.table {
+  display: grid;
+  gap: 20px;
+  grid-auto-columns: minmax(112px, auto);
+  grid-template-rows: auto;
+  grid-auto-flow: column;
+}
+
+.column {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 8px;
+}
+
+.row {
+  text-align: center;
+}

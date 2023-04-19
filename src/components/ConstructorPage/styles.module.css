@@ -1,0 +1,10 @@
+.page {
+  max-width: var(--max-width);
+  width: 100%;
+  display: grid;
+  grid-template: ". ." 100% / 1fr 1fr;
+  gap: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  height: calc(100vh - var(--header-height) - var(--bottom-padding));
+}
