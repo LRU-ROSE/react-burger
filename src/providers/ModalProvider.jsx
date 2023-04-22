@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import Modal from '../components/Modal';
 import ModalOverlay from '../components/ModalOverlay';
 
@@ -30,6 +31,10 @@ const ModalProvider = ({children}) => {
       </Modal>
     </ModalContext.Provider>
   );
+};
+
+ModalProvider.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 export default ModalProvider;

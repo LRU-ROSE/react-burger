@@ -143,6 +143,7 @@ const BurgerProvider = ({ ingredients, children }) => {
 
 BurgerProvider.propTypes = {
   ingredients: PropTypes.arrayOf(Ingredient.isRequired), // Необязательный - при инициализации их может не быть
+  children: PropTypes.node.isRequired
 };
 
 export default BurgerProvider;
