@@ -10,15 +10,10 @@ const initData = {
   burger: {
     bun: null,
     components: [
-      '60d3b41abdacab0026a733ce',
-      '60d3b41abdacab0026a733c9',
-      '60d3b41abdacab0026a733d1',
-      '60d3b41abdacab0026a733d0',
-      '60d3b41abdacab0026a733d0',
-      '60d3b41abdacab0026a733d2',
-      '60d3b41abdacab0026a733d3',
-      '60d3b41abdacab0026a733d3',
-      '60d3b41abdacab0026a733d3',
+      '643d69a5c3f7b9001cfa0941',
+      '643d69a5c3f7b9001cfa0943',
+      '643d69a5c3f7b9001cfa0946',
+      '643d69a5c3f7b9001cfa0946',
     ],
     totalPrice: 0,
   }
@@ -47,6 +42,11 @@ export const useBurgerCounter = (id) => {
 export const useBurgerModifier = () => {
   const {setBun, addIngredient, removeIngredient, data: { burger: {bun, components, totalPrice}}} = useContext(BurgerContext);
   return {bun, components, totalPrice, setBun, addIngredient, removeIngredient};
+};
+
+export const useAllComponents = () => {
+  const {data: { burger: {bun, components}}} = useContext(BurgerContext);
+  return [bun, ...components];
 };
 
 const computeIngredients = (ingredients) => {
@@ -143,6 +143,7 @@ const BurgerProvider = ({ ingredients, children }) => {
 
 BurgerProvider.propTypes = {
   ingredients: PropTypes.arrayOf(Ingredient.isRequired), // Необязательный - при инициализации их может не быть
+  children: PropTypes.node.isRequired
 };
 
 export default BurgerProvider;
