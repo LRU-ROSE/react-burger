@@ -4,6 +4,27 @@
   align-items: center;
 }
 
+.dragged {
+  display: none;
+}
+
+.addGap {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.addTopGap {
+  padding-top: 8px;
+}
+
+.addBottomGap {
+  padding-bottom: 8px;
+}
+
+.tempComponent {
+  opacity: 0.7;
+}
+
 .dragIcon {
   cursor: grab;
 }

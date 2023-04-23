@@ -17,16 +17,9 @@
   overflow: hidden;
 }
 
-.burger, .components {
+.burger {
   display: flex;
   flex-flow: column nowrap;
-  gap: 16px;
-}
-
-.components {
-  height: 100%;
-  overflow-y: scroll;
-  min-height: 80px;
 }
 
 .totalPrice, .footer {

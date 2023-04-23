@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
-import { useIngredientById } from '../../providers/BurgerProvider';
 import { combineClasses } from '../../utils';
+import IngredientType from '../../types/Ingredient';
 
 import cs from './styles.module.css';
 
-const IngredientDetails = ({id}) => {
-  const { name, image_large, calories, proteins, fat, carbohydrates } = useIngredientById(id);
+const IngredientDetails = ({data}) => {
+  const { name, image_large, calories, proteins, fat, carbohydrates } = data;
   return (
     <div className={cs.details}>
       <img src={image_large} alt={name} className={cs.image}/>
@@ -33,7 +32,7 @@ const IngredientDetails = ({id}) => {
 };
 
 IngredientDetails.propTypes = {
-  id: PropTypes.string.isRequired,
+  data: IngredientType.isRequired,
 };
 
 export default IngredientDetails;
