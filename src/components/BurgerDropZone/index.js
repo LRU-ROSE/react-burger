@@ -20,8 +20,6 @@ function BurgerDropZone() {
   const tempElStartIdx = useRef(null);
   tempElStartIdx.current = tempEl?.startIdx ?? null;
 
-  console.log('RERENDER');
-
   let added = false;
   const componentsEls = components.map((data, index) => {
     let el = (
