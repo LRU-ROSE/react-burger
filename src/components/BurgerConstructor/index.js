@@ -29,7 +29,7 @@ const BurgerConstructor = () => {
     );
   } else {
     burgerEl = (
-      <p className={"text text_type_main-default " + cs.emptyText}>
+      <p className={"text text_type_main-default"}>
         Загрузка...
       </p>
     );
