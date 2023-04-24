@@ -19,7 +19,7 @@ IngredientsSection.propTypes = {
   name: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
-  ingredients: PropTypes.arrayOf(IngredientType).isRequired,
+  ingredients: PropTypes.arrayOf(IngredientType.isRequired).isRequired,
 };
 
 export default IngredientsSection;

@@ -10,7 +10,6 @@ import {
   useComponents,
 } from "../../services/burger";
 import BurgerComponent from "../BurgerComponent";
-import { combineClasses } from "../../utils";
 
 function BurgerDropZone() {
   const components = useComponents();
@@ -60,53 +59,56 @@ function BurgerDropZone() {
     );
   }
 
-  const handleHover = useCallback((item, monitor) => {
-    if (components.length === 0) {
-      if (tempElStartIdx.current !== 0) {
-        setTempEl({ data: item.data, startIdx: 0 });
-      }
-      return;
-    }
-    const clientOffset = monitor.getClientOffset();
-    const el = document
-      .elementsFromPoint(clientOffset.x, clientOffset.y)
-      .find((el) => el.classList?.contains(cs.component));
-    if (!el) {
-      return;
-    }
-    const elRect = el.getBoundingClientRect();
-    const elMiddleY = (elRect.bottom - elRect.top) / 2;
-    // Мышка находится выше середины компонента на который хотим дропнуть или нет
-    const hoverTop = clientOffset.y - elRect.top < elMiddleY;
-    const idx = +el.getAttribute("data-idx");
-    const startIdx = hoverTop ? idx : idx + 1;
-    if (item.type === "new-ingredient") {
-      if (tempElStartIdx.current !== startIdx) {
-        setTempEl({ data: item.data, startIdx });
-      }
-    } else {
-      if (
-        item.index === idx ||
-        item.index === (hoverTop ? idx - 1 : idx + 1)
-      ) {
-        if (tempElStartIdx.current !== null) {
-          setTempEl(null);
+  const handleHover = useCallback(
+    (item, monitor) => {
+      if (components.length === 0) {
+        if (tempElStartIdx.current !== 0) {
+          setTempEl({ data: item.data, startIdx: 0 });
         }
-      } else if (tempElStartIdx.current !== startIdx) {
-        setTempEl({
-          data: item.data,
-          startIdx,
-          oldIndex: item.index,
-        });
+        return;
       }
-    }
-  }, [components.length]);
+      const clientOffset = monitor.getClientOffset();
+      const el = document
+        .elementsFromPoint(clientOffset.x, clientOffset.y)
+        .find((el) => el.classList?.contains(cs.component));
+      if (!el) {
+        return;
+      }
+      const elRect = el.getBoundingClientRect();
+      const elMiddleY = (elRect.bottom - elRect.top) / 2;
+      // Мышка находится выше середины компонента на который хотим дропнуть или нет
+      const hoverTop = clientOffset.y - elRect.top < elMiddleY;
+      const idx = +el.getAttribute("data-idx");
+      const startIdx = hoverTop ? idx : idx + 1;
+      if (item.type === "new-ingredient") {
+        if (tempElStartIdx.current !== startIdx) {
+          setTempEl({ data: item.data, startIdx });
+        }
+      } else {
+        if (
+          item.index === idx ||
+          item.index === (hoverTop ? idx - 1 : idx + 1)
+        ) {
+          if (tempElStartIdx.current !== null) {
+            setTempEl(null);
+          }
+        } else if (tempElStartIdx.current !== startIdx) {
+          setTempEl({
+            data: item.data,
+            startIdx,
+            oldIndex: item.index,
+          });
+        }
+      }
+    },
+    [components.length]
+  );
 
   const [isOver, dropTarget] = useDrop({
     accept: "ingredient",
     drop() {
       if (tempEl) {
-        if (Object.hasOwn(tempEl, 'oldIndex')) {
+        if (Object.hasOwn(tempEl, "oldIndex")) {
           dispatch(
             moveIngredient({
               oldIndex: tempEl.oldIndex,
@@ -132,13 +134,7 @@ function BurgerDropZone() {
   }, [isOver, dispatch]);
 
   return (
-    <div
-      className={combineClasses(
-        cs.zone,
-        componentsEls.length === 0 && cs.emptyZone
-      )}
-      ref={dropTarget}
-    >
+    <div className={cs.zone} ref={dropTarget}>
       {componentsEls.length === 0 ? (
         <p className={"text text_type_main-default " + cs.emptyText}>
           Перенесите ингредиенты

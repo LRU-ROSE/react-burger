@@ -1,43 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 
 const initialState = {
   bun: null,
   defaultBun: null,
   components: [],
-  totalPrice: 0,
 };
-
-function computeTotalPrice(state) {
-  return state.components.reduce(
-    (total, el) => total + el.price,
-    state.bun?.price ?? 0
-  );
-}
 
 export const burgetSlice = createSlice({
   name: "burger",
   initialState,
   reducers: {
     removeComponent: (state, action) => {
-      state.components = state.components.filter((_, idx) => idx !== action.payload);
-      state.totalPrice = computeTotalPrice(state);
+      state.components = state.components.filter(
+        (_, idx) => idx !== action.payload
+      );
     },
     setBun: (state, action) => {
       state.bun = action.payload;
-      state.totalPrice = computeTotalPrice(state);
     },
     setDefaultBun: (state, action) => {
       state.bun = action.payload;
       state.defaultBun = action.payload;
-      state.totalPrice = computeTotalPrice(state);
     },
     addIngredient: (state, action) => {
       const { startIdx, data } = action.payload;
       const array = [...state.components];
       array.splice(startIdx, 0, data);
       state.components = array;
-      state.totalPrice = computeTotalPrice(state);
     },
     moveIngredient: (state, action) => {
       let { oldIndex, newIndex } = action.payload;
@@ -55,11 +46,9 @@ export const burgetSlice = createSlice({
     clearComponents: (state) => {
       state.bun = state.defaultBun;
       state.components = [];
-      state.totalPrice = computeTotalPrice(state);
-    }
+    },
   },
 });
-
 
 export const {
   removeComponent,
@@ -70,36 +59,58 @@ export const {
   clearComponents,
 } = burgetSlice.actions;
 
+const allComponentsSelector = createSelector(
+  (state) => state.burger.bun,
+  (state) => state.burger.components,
+  (bun, components) => [bun._id, ...components.map((el) => el._id)]
+);
+
 export const useAllComponents = () => {
-  return useSelector((state) => {
-    return [
-      state.burger.bun._id,
-      ...state.burger.components.map((el) => el._id),
-    ];
-  });
+  return useSelector(allComponentsSelector);
 };
+
+const componentsSelector = createSelector(
+  (state) => state.burger.components,
+  (components) => components
+);
 
 export const useComponents = () => {
-  return useSelector((state) => state.burger.components);
+  return useSelector(componentsSelector);
 };
+
+const bunAndTotalPriceSelector = createSelector(
+  (state) => state.burger.bun,
+  (state) => state.burger.components,
+  (bun, components) => {
+    const totalPrice = components.reduce(
+      (total, el) => total + el.price,
+      bun?.price ?? 0
+    );
+    return [bun, totalPrice];
+  }
+);
 
 export const useBunAndTotalPrice = () => {
-  return useSelector((state) => [
-    state.burger.bun,
-    state.burger.totalPrice,
-  ]);
+  return useSelector(bunAndTotalPriceSelector);
 };
 
-export const useUsedComponentCount = (id) => {
-  return useSelector((state) => {
-    if (state.burger.bun?._id === id) {
+const componentsCountSelector = createSelector(
+  (state) => state.burger.bun,
+  (state) => state.burger.components,
+  (_, id) => id,
+  (bun, components, id) => {
+    if (bun?._id === id) {
       return 1;
     }
-    return state.burger.components.reduce(
+    return components.reduce(
       (count, el) => count + (el._id === id ? 1 : 0),
       0
     );
-  });
+  }
+);
+
+export const useUsedComponentCount = (id) => {
+  return useSelector(componentsCountSelector);
 };
 
 export default burgetSlice.reducer;
