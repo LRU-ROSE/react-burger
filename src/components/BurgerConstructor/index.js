@@ -1,42 +1,56 @@
-import { useCallback } from 'react';
-import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useBurgerModifier } from '../../providers/BurgerProvider';
-import { combineClasses } from '../../utils';
-import BurgerComponent from '../BurgerComponent';
-import cs from './styles.module.css';
-import { useModal } from '../../providers/ModalProvider';
-import OrderDetails from '../OrderDetails';
+import { useCallback } from "react";
+import {
+  CurrencyIcon,
+  Button,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { combineClasses } from "../../utils";
+import BurgerComponent from "../BurgerComponent";
+import cs from "./styles.module.css";
+import { useModal } from "../../providers/ModalProvider";
+import OrderDetails from "../OrderDetails";
+import BurgerDropZone from "../BurgerDropZone";
+import { useBunAndTotalPrice } from "../../services/burger";
 
 const BurgerConstructor = () => {
+  const [bun, totalPrice] = useBunAndTotalPrice();
   const showModal = useModal();
   const showInfo = useCallback(() => {
     showModal(null, <OrderDetails />);
   }, [showModal]);
-  const { totalPrice, bun, components, removeIngredient } = useBurgerModifier();
 
-  let burger = '...';
+  let burgerEl;
   if (bun) {
-    const componentsEls = components.map((componentId, idx) => <BurgerComponent id={componentId} key={componentId + idx} onDelete={() => removeIngredient(idx)} />);
-    burger = <>
-      <BurgerComponent id={bun} type='top' />
-      <div className={cs.components}>
-        {componentsEls}
-      </div>
-      <BurgerComponent id={bun} type='bottom' />
-    </>;
+    burgerEl = (
+      <>
+        <BurgerComponent component={bun} type="top" />
+        <BurgerDropZone />
+        <BurgerComponent component={bun} type="bottom" />
+      </>
+    );
+  } else {
+    burgerEl = (
+      <p className={"text text_type_main-default"}>
+        Загрузка...
+      </p>
+    );
   }
 
   return (
-    <section className={combineClasses('pt-25 pl-4', cs.constructor)}>
-      <div className={cs.burger}>
-        {burger}
-      </div>
-      <div className={combineClasses('mt-10 mr-4', cs.footer)}>
-        <div className={combineClasses('mr-10', cs.totalPrice)}>
-          <p className='text text_type_digits-medium mr-2'>{totalPrice}</p>
-          <CurrencyIcon type='primary'  />
+    <section className={combineClasses("pt-25 pl-4", cs.constructor)}>
+      <div className={cs.burger}>{burgerEl}</div>
+      <div className={combineClasses("mt-10 mr-4", cs.footer)}>
+        <div className={combineClasses("mr-10", cs.totalPrice)}>
+          <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
+          <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType='button' type='primary' size='large' onClick={showInfo}>Оформить заказ</Button>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={showInfo}
+        >
+          Оформить заказ
+        </Button>
       </div>
     </section>
   );

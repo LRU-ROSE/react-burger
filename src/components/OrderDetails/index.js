@@ -3,40 +3,32 @@ import { combineClasses } from '../../utils';
 import cs from './styles.module.css';
 
 import ok from './ok.svg';
-import { useEffect, useRef, useState } from 'react';
-import { sendOrder } from '../../api/ingredients';
-import { useAllComponents } from '../../providers/BurgerProvider';
+import { useEffect, useRef } from 'react';
+import { useAllComponents } from '../../services/burger';
+import { useSendOrderMutation } from '../../services/api';
 
 const OrderDetails = () => {
   const components = useAllComponents();
   const componentsRef = useRef(components);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [id, setId] = useState(null);
+
+  const [sendOrder, { error, data }] = useSendOrderMutation();
   useEffect(() => {
-    if (componentsRef.current === null) {
-      return;
+    if (componentsRef.current !== null) {
+      sendOrder(componentsRef.current);
+      componentsRef.current = null;
     }
-    sendOrder(componentsRef.current).then((data) => {
-      setId(data.order.number);
-      setError(null);
-    }, (error) => {
-      setId(null);
-      setError(error);
-    }).finally(() => {
-      setIsLoading(false);
-    });
-    componentsRef.current = null;
-  }, []);
-  if (isLoading || error !== null) {
-    const text = isLoading ? 'Отправка...' : `Ошибка: ${error.toString()}`;
+  }, [sendOrder]);
+
+  if (!data) {
+    const text = error ? `Ошибка: ${error.error.toString()}` : 'Отправка...';
     return <div className={cs.details}>
-      <p className={combineClasses('text text_type_main-medium mt-8', cs.center, !isLoading && cs.error)}>{text}</p>
+      <p className={combineClasses('text text_type_main-medium mt-8', cs.center, error && cs.error)}>{text}</p>
     </div>;
   }
+
   return (
     <div className={cs.details}>
-      <p className={combineClasses('text text_type_digits-large', cs.center)}>{id}</p>
+      <p className={combineClasses('text text_type_digits-large', cs.center)}>{data.order.number}</p>
       <p className={combineClasses('text text_type_main-medium mt-8', cs.center)}>идентификатор заказа</p>
       <img className={cs.image} src={ok} alt='ОК'/>
       <p className={combineClasses('text text_type_main-default', cs.center)}>Ваш заказ начали готовить</p>

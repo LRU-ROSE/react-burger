@@ -1,33 +1,22 @@
-import { useState, useEffect } from "react";
-import { getIngredients } from "../../api/ingredients";
-import BurgerProvider from "../../providers/BurgerProvider";
+import { Provider } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import ModalProvider from "../../providers/ModalProvider";
+import { store } from "../../services";
 import AppHeader from "../AppHeader";
 import ConstructorPage from "../ConstructorPage";
 
 const App = () => {
-  const [ingredients, setIngredients] = useState(null);
-  useEffect(() => {
-    let aborted = false;
-    getIngredients()
-      .then((val) => {
-        if (!aborted) {
-          setIngredients(val.data);
-        }
-      })
-      .catch((e) => console.log(`Ошибка загрузки компонентов: ${e}`));
-    return () => {
-      aborted = true;
-    };
-  }, []);
   return (
     <>
       <AppHeader />
-      <BurgerProvider ingredients={ingredients}>
+      <Provider store={store}>
         <ModalProvider>
-          <ConstructorPage />
+          <DndProvider backend={HTML5Backend}>
+            <ConstructorPage />
+          </DndProvider>
         </ModalProvider>
-      </BurgerProvider>
+      </Provider>
     </>
   );
 };
