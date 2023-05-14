@@ -41,7 +41,7 @@ const ProfilePage = () => {
     e.preventDefault();
     const data = {};
     if (login.isChanged()) {
-      data.name = login.props.value;
+      data.email = login.props.value;
     }
     if (password.isChanged()) {
       data.password = password.props.value;
