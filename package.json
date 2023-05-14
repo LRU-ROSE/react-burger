@@ -41,7 +41,7 @@
   "bugs": {
     "url": "https://github.com/LRU-ROSE/react-burger/issues"
   },
-  "homepage": "./",
+  "homepage": "https://LRU-ROSE.github.io/react-burger",
   "eslintConfig": {
     "extends": [
       "react-app",
