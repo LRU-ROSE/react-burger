@@ -5,7 +5,7 @@ import { combineClasses } from "../../utils";
 import IngredientsSection from "../IngredientsSection";
 
 import cs from "./styles.module.css";
-import { useGetIngredientsByTypeQuery } from "../../services/api";
+import { useGetIngredientsQuery } from "../../services/api/ingredientsApi";
 import { setDefaultBun } from "../../services/burger";
 import { bunType, ingredientTypes } from "../../helpers/ingredientTypes";
 
@@ -13,13 +13,13 @@ const BurgerIngredients = () => {
   const scroller = useRef();
   const [tabIdx, setTabIdx] = useState(0);
 
-  const { data, error, isLoading } = useGetIngredientsByTypeQuery();
+  const { data, error, isLoading } = useGetIngredientsQuery();
   const firstTime = useRef(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (firstTime.current && data) {
-      dispatch(setDefaultBun(data[bunType]?.[0] ?? null));
+      dispatch(setDefaultBun(data.byType[bunType]?.[0] ?? null));
       firstTime.current = false;
     }
   }, [isLoading, data, dispatch]);
@@ -73,7 +73,7 @@ const BurgerIngredients = () => {
         key={typeName}
         className="ingredient-section"
         index={index}
-        ingredients={data[typeName]}
+        ingredients={data.byType[typeName]}
       />
     );
   });

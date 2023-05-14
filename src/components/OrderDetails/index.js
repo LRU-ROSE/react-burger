@@ -5,7 +5,9 @@ import cs from './styles.module.css';
 import ok from './ok.svg';
 import { useEffect, useRef } from 'react';
 import { useAllComponents } from '../../services/burger';
-import { useSendOrderMutation } from '../../services/api';
+import { useSendOrderMutation } from '../../services/api/userApi';
+import { isUserRequiredError } from '../../helpers/UserRequiredError';
+import GotoLogin from '../GotoLogin';
 
 const OrderDetails = () => {
   const components = useAllComponents();
@@ -20,7 +22,10 @@ const OrderDetails = () => {
   }, [sendOrder]);
 
   if (!data) {
-    const text = error ? `Ошибка: ${error.error.toString()}` : 'Отправка...';
+    if (isUserRequiredError(error)) {
+      return <GotoLogin />;
+    }
+    const text = error ? `Ошибка: ${error.error ?? error}` : 'Отправка...';
     return <div className={cs.details}>
       <p className={combineClasses('text text_type_main-medium mt-8', cs.center, error && cs.error)}>{text}</p>
     </div>;

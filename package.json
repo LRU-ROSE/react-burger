@@ -12,11 +12,13 @@
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
+    "async-mutex": "^0.4.0",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
+    "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
     "reselect": "^4.1.8",
@@ -39,7 +41,7 @@
   "bugs": {
     "url": "https://github.com/LRU-ROSE/react-burger/issues"
   },
-  "homepage": "https://LRU-ROSE.github.io/react-burger",
+  "homepage": "./",
   "eslintConfig": {
     "extends": [
       "react-app",

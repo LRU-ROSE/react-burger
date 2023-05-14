@@ -1,0 +1,10 @@
+.container {
+  margin: 120px auto 0 auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.error {
+  color: #ff6363;
+}
