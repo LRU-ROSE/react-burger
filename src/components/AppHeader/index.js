@@ -1,6 +1,7 @@
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import AppHeaderLink from '../AppHeaderLink';
 import cs from './styles.module.css';
+import { Link } from 'react-router-dom';
 
 const AppHeader = () => {
   return (
@@ -8,16 +9,16 @@ const AppHeader = () => {
       <nav className={cs.navigation}>
         <ul className={cs.menu}>
           <li>
-            <AppHeaderLink iconName='burger' text='Конструктор' href='#' active />
+            <AppHeaderLink iconName='burger' text='Конструктор' href='/' pathExact />
           </li>
           <li>
-            <AppHeaderLink iconName='list' text='Лента заказов' href='#' />
+            <AppHeaderLink iconName='list' text='Лента заказов' href='/feed' />
           </li>
         </ul>
-        <a href='/' className={cs.logo}>
+        <Link to='/' className={cs.logo}>
           <Logo />
-        </a>
-        <AppHeaderLink iconName='profile' text='Личный кабинет' href='#' className={cs.login} />
+        </Link>
+        <AppHeaderLink iconName='profile' text='Личный кабинет' href='/profile' className={cs.login} />
       </nav>
     </header>
   );

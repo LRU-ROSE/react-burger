@@ -1,9 +1,10 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
+import { useNavigate, useLocation } from "react-router-dom";
 import IngredientType from "../../types/Ingredient";
 import { combineClasses } from "../../utils";
 
@@ -12,14 +13,38 @@ import { useModal } from "../../providers/ModalProvider";
 import IngredientDetails from "../IngredientDetails";
 import { bunType } from "../../helpers/ingredientTypes";
 import { useUsedComponentCount } from "../../services/burger";
+import useLatest from "../../helpers/useLatest";
 
 const Ingredient = ({ data }) => {
   const { _id: id, price, name, image, type } = data;
   const count = useUsedComponentCount(id);
-  const showModal = useModal();
+  const unloadFunc = useRef(null);
+  const modalData = useLatest({
+    data,
+    showModal: useModal(),
+    navigate: useNavigate(),
+    location: useLocation(),
+  });
   const showInfo = useCallback(() => {
-    showModal("Детали ингредиента", <IngredientDetails data={data} />);
-  }, [data, showModal]);
+    const { navigate, location, showModal, data: mData } = modalData.current;
+    if (!unloadFunc.current) {
+      unloadFunc.current = () => {
+        window.history.replaceState({}, '');
+      };
+      window.addEventListener('beforeunload', unloadFunc.current);
+    }
+    showModal("Детали ингредиента", <IngredientDetails data={mData} />, () => {
+      navigate(-1);
+      window.history.replaceState({}, '');
+      if (unloadFunc.current) {
+        window.removeEventListener('beforeunload', unloadFunc.current);
+        unloadFunc.current = null;
+      }
+    });
+    navigate(`/ingredients/${mData._id}`, {
+      state: { backgroundLocation: location },
+    });
+  }, [modalData]);
   const [{ isDrag }, dragRef] = useDrag({
     type: type === bunType ? "bun" : "ingredient",
     item: { type: "new-ingredient", data },

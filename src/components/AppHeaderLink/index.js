@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import { combineClasses } from '../../utils';
 
 import cs from './styles.module.css';
+import { Link, useLocation } from 'react-router-dom';
 
-const AppHeaderLink = ({ text, href, iconName, active = false, className = null }) => {
+const AppHeaderLink = ({ text, href, pathExact = false, iconName, className = null }) => {
+  const location = useLocation();
+  const active = pathExact ? location.pathname === href : location.pathname.startsWith(href);
   const iconType = active ? 'primary' : 'secondary';
   let iconEl;
   switch (iconName) {
@@ -23,12 +26,12 @@ const AppHeaderLink = ({ text, href, iconName, active = false, className = null 
       break;
   }
   return (
-    <a href={href} className={combineClasses(cs.link, className)}>
+    <Link to={href} className={combineClasses(cs.link, className)}>
       {iconEl}
       <p className={`text text_type_main-default${ active ? '' : ' text_color_inactive'}`}>
         {text}
       </p>
-    </a>
+    </Link>
   );
 };
 
@@ -37,7 +40,7 @@ AppHeaderLink.propTypes = {
   text: PropTypes.string.isRequired,
   href: PropTypes.string.isRequired,
   className: PropTypes.string, // Необязателен
-  active: PropTypes.bool, // Необязателен (если атрибут отсутствует, значит он равен false)
+  pathExact: PropTypes.bool, // Необязателен
 };
 
 export default AppHeaderLink;

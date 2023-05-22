@@ -1,6 +1,6 @@
 import { combineClasses } from '../../utils';
-import BurgerConstructor from '../BurgerConstructor';
-import BurgerIngredients from '../BurgerIngredients';
+import BurgerConstructor from '../../components/BurgerConstructor';
+import BurgerIngredients from '../../components/BurgerIngredients';
 import cs from './styles.module.css';
 
 const ConstructorPage = () => {

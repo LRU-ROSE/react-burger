@@ -8,7 +8,7 @@ const initialState = {
   components: [],
 };
 
-export const burgetSlice = createSlice({
+export const burgerSlice = createSlice({
   name: "burger",
   initialState,
   reducers: {
@@ -57,7 +57,7 @@ export const {
   addIngredient,
   moveIngredient,
   clearComponents,
-} = burgetSlice.actions;
+} = burgerSlice.actions;
 
 const allComponentsSelector = createSelector(
   (state) => state.burger.bun,
@@ -113,4 +113,4 @@ export const useUsedComponentCount = (id) => {
   return useSelector(componentsCountSelector);
 };
 
-export default burgetSlice.reducer;
+export default burgerSlice.reducer;
