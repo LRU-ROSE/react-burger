@@ -4,13 +4,13 @@ import { cx } from "../../utils";
 
 import cs from "./styles.module.css";
 
-import { isUserRequiredError } from "../../helpers/UserRequiredError";
-import GotoLogin from "../GotoLogin";
 import { useGetIngredientsQuery } from "../../services/api/ingredientsApi";
 import OrderItem from "../OrderItem";
 import OrderDetails from "../OrderDetails";
 import usePathModal from "../../helpers/usePathModal";
 import { OrderType } from '../../types/order';
+import LoadingMessage from '../LoadingMessage';
+import ErrorMessage from '../ErrorMessage';
 
 const OrdersList = ({ orders, baseUrl, showStatus = false, className }) => {
   const showInfo = usePathModal(
@@ -24,20 +24,15 @@ const OrdersList = ({ orders, baseUrl, showStatus = false, className }) => {
   const { data, error, isLoading } = useGetIngredientsQuery();
 
   if (isLoading) {
-    return (
-      <p className={cx("text text_type_main-medium mt-8", className)}>
-        Загрузка...
-      </p>
-    );
+    return <LoadingMessage className={className} />;
   }
   if (error || !data) {
-    if (isUserRequiredError(error)) {
-      return <GotoLogin />;
-    }
     return (
-      <p className={cx("text text_type_main-medium mt-8", className)}>
-        Ошибка получения компонентов...
-      </p>
+      <ErrorMessage
+        className={className}
+        message="Ошибка получения компонентов"
+        error={error}
+      />
     );
   }
 

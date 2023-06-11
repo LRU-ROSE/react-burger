@@ -1,5 +1,8 @@
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { webSocketWithReauth } from "./baseQuery";
+import useLatest from "../../helpers/useLatest";
 
 export const ordersApi = createApi({
   reducerPath: "ordersApi",
@@ -57,5 +60,12 @@ export const ordersApi = createApi({
     }),
   }),
 });
+
+export const useCloseOrdersQuery = () => {
+  const dispatch = useLatest(useDispatch());
+  return useCallback(() => {
+    dispatch.current(ordersApi.util.resetApiState());
+  }, [dispatch]);
+};
 
 export const { useGetAllOrdersQuery, useGetOrdersQuery } = ordersApi;

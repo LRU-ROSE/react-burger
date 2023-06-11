@@ -15,6 +15,7 @@ import GotoLogin from "../../components/GotoLogin";
 
 import cs from "./styles.module.css";
 import ProfileLayout from "../../components/ProfileLayout";
+import LoadingMessage from "../../components/LoadingMessage";
 
 const ProfilePage = () => {
   const name = useTrackedInput();
@@ -130,11 +131,7 @@ const ProfilePage = () => {
             Сохранить
           </Button>
         </div>
-        {isLoading ? (
-          <div className={cx("text text_type_main-small", cs.loading)}>
-            Загрузка...
-          </div>
-        ) : null}
+        {isLoading ? <LoadingMessage /> : null}
       </form>
     </ProfileLayout>
   );

@@ -1,22 +1,24 @@
+import { useEffect } from "react";
+
 import cs from "./styles.module.css";
 
-import { useGetOrdersQuery } from "../../services/api/orders";
+import { useGetOrdersQuery, useCloseOrdersQuery } from "../../services/api/orders";
 import OrdersList from "../../components/OrdersList";
 import ProfileLayout from "../../components/ProfileLayout";
+import LoadingMessage from "../../components/LoadingMessage";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const OrdersHistoryPage = () => {
   const { data, error, isLoading } = useGetOrdersQuery();
+  const close = useCloseOrdersQuery();
+  useEffect(() => close, [close]);
 
   if (error) {
-    return (
-      <p className="text text_type_main-medium mt-8">
-        Ошибка получения заказов...
-      </p>
-    );
+    return <ErrorMessage message="Ошибка получения заказов" error={error} />;
   }
 
   if (isLoading || !data) {
-    return <p className="text text_type_main-medium mt-8">Загрузка...</p>;
+    return <LoadingMessage />;
   }
 
   return (

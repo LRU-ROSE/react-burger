@@ -8,6 +8,8 @@ import cs from "./styles.module.css";
 import { useGetIngredientsQuery } from "../../services/api/ingredientsApi";
 import { setDefaultBun } from "../../services/burger";
 import { bunType, ingredientTypes } from "../../helpers/ingredientTypes";
+import LoadingMessage from "../LoadingMessage";
+import ErrorMessage from "../ErrorMessage";
 
 const BurgerIngredients = () => {
   const scroller = useRef();
@@ -45,11 +47,16 @@ const BurgerIngredients = () => {
   }, []);
 
   if (isLoading) {
-    return "Загрузка...";
+    return <LoadingMessage />;
   }
 
   if (error) {
-    return `Ошибка: ${error}`;
+    return (
+      <ErrorMessage
+        message="Ошибка получения компонентов"
+        error={error}
+      />
+    );
   }
 
   const tabs = ingredientTypes.map(([typeName, typeDesc], idx) => {

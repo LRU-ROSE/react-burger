@@ -1,5 +1,5 @@
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import cs from "./styles.module.css";
 import { cx } from "../../utils";
 import PriceTag from "../PriceTag";
@@ -20,6 +20,7 @@ const OrderItem = ({
   const total = order.ingredients.reduce((total, id) => {
     return total + ingredients[id].price;
   }, 0);
+
   return (
     <Link className={cs.link} to={`${baseUrl}/${order._id}`} onClick={onClick}>
       <article className={cs.item}>

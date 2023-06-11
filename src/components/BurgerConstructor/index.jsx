@@ -8,6 +8,7 @@ import OrderCompleted from "../OrderCompleted";
 import BurgerDropZone from "../BurgerDropZone";
 import { useBunAndTotalPrice } from "../../services/burger";
 import PriceTag from "../PriceTag";
+import LoadingMessage from "../LoadingMessage";
 
 const BurgerConstructor = () => {
   const [bun, totalPrice] = useBunAndTotalPrice();
@@ -26,7 +27,7 @@ const BurgerConstructor = () => {
       </>
     );
   } else {
-    burgerEl = <p className={"text text_type_main-default"}>Загрузка...</p>;
+    burgerEl = <LoadingMessage />;
   }
 
   return (
