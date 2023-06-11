@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, Navigate } from "react-router-dom";
 import { useRegisterMutation } from "../../services/api/authApi";
-import { combineClasses } from "../../utils";
+import { cx } from "../../utils";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -31,7 +31,7 @@ const RegisterPage = () => {
   if (result.isError) {
     errorEl = (
       <p
-        className={combineClasses(
+        className={cx(
           "text text_type_main-small text_color_inactive mt-4",
           cs.error
         )}

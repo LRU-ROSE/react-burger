@@ -4,8 +4,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink } from "react-router-dom";
-import { combineClasses } from "../../utils";
+import { cx } from "../../utils";
 import {
   useGetUserQuery,
   useUpdateUserMutation,
@@ -15,7 +14,7 @@ import { isUserRequiredError } from "../../helpers/UserRequiredError";
 import GotoLogin from "../../components/GotoLogin";
 
 import cs from "./styles.module.css";
-import LogoutButton from "../../components/LogoutButton/LogoutButton";
+import ProfileLayout from "../../components/ProfileLayout";
 
 const ProfilePage = () => {
   const name = useTrackedInput();
@@ -67,55 +66,17 @@ const ProfilePage = () => {
     }
     errorEl = (
       <p
-        className={combineClasses(
+        className={cx(
           "text text_type_main-small text_color_inactive mt-4",
           cs.error
         )}
       >
-        {error.error ?? error}
+        {(error.error ?? error)?.toString()}
       </p>
     );
   }
   return (
-    <div className={cs.profile}>
-      <div className={cs.navigation}>
-        <ul className={cs.list}>
-          <li className={cs.listItem}>
-            <NavLink
-              to="/profile"
-              className={combineClasses("text text_type_main-medium", cs.link)}
-            >
-              Профиль
-            </NavLink>
-          </li>
-          <li className={cs.listItem}>
-            <NavLink
-              to="/profile/orders"
-              className={combineClasses("text text_type_main-medium", cs.link)}
-            >
-              История заказов
-            </NavLink>
-          </li>
-          <li className={cs.listItem}>
-            <LogoutButton
-              className={combineClasses(
-                "text text_type_main-medium",
-                cs.button
-              )}
-            >
-              Выход
-            </LogoutButton>
-          </li>
-        </ul>
-        <p
-          className={combineClasses(
-            "text text_type_main-small text_color_inactive mt-20",
-            cs.info
-          )}
-        >
-          В этом разделе вы можете изменить свои персональные данные
-        </p>
-      </div>
+    <ProfileLayout description="В этом разделе вы можете изменить свои персональные данные">
       <form
         action="#"
         method="post"
@@ -150,7 +111,7 @@ const ProfilePage = () => {
           extraClass="mt-6"
         />
         {errorEl}
-        <div className={combineClasses(cs.buttons, !showButtons && cs.hidden)}>
+        <div className={cx(cs.buttons, !showButtons && cs.hidden)}>
           <Button
             htmlType="button"
             type="secondary"
@@ -170,14 +131,12 @@ const ProfilePage = () => {
           </Button>
         </div>
         {isLoading ? (
-          <div
-            className={combineClasses("text text_type_main-small", cs.loading)}
-          >
+          <div className={cx("text text_type_main-small", cs.loading)}>
             Загрузка...
           </div>
         ) : null}
       </form>
-    </div>
+    </ProfileLayout>
   );
 };
 

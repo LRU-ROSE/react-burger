@@ -1,7 +1,7 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useCallback, useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { combineClasses } from "../../utils";
+import { cx } from "../../utils";
 import IngredientsSection from "../IngredientsSection";
 
 import cs from "./styles.module.css";
@@ -81,9 +81,9 @@ const BurgerIngredients = () => {
   return (
     <section className={cs.ingredients}>
       <h1 className="text text_type_main-large mt-10">Соберите бургер</h1>
-      <div className={combineClasses("mt-5", cs.tabs)}>{tabs}</div>
+      <div className={cx("mt-5", cs.tabs)}>{tabs}</div>
       <div
-        className={combineClasses("mt-10", cs.sections)}
+        className={cx("mt-10", cs.sections)}
         onScroll={handleScroll}
         ref={scroller}
       >

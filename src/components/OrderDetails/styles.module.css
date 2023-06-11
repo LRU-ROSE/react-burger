@@ -1,20 +1,87 @@
-.details {
+/* .list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-flow: column nowrap;
+  gap: 16px;
+} */
+
+.details {
+  margin-top: 20px;
+  height: 100%;
+  display: grid;
+  grid-template:
+    "id        id        id       "
+    ".         .         .        " 40px
+    "title     title     title    "
+    ".         .         .        " 12px
+    "status    status    status   "
+    ".         .         .        " 60px
+    "compTitle compTitle compTitle"
+    ".         .         .        " 24px
+    "comp      comp      comp     " minmax(0, 1fr)
+    ".         .         .        " 40px
+    "date      .         price    "
+    / auto 1fr auto;
+  width: 640px;
+  overflow: hidden;
+}
+
+.number {
+  grid-area: id;
+}
+
+.name {
+  grid-area: title;
+}
+
+.status {
+  grid-area: status;
+}
+
+.ingreds {
+  grid-area: compTitle;
+}
+
+.components {
+  grid-area: comp;
+  min-height: 0;
+  margin: 0;
+  padding: 0 24px 0 0;
+  height: 100%;
+  list-style: none;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 16px;
+}
+
+.listItem {
+  display: grid;
+  grid-template: "icon title price" 64px / 64px 1fr auto;
   align-items: center;
-  padding: 0 60px 40px 60px;
+  gap: 16px;
 }
 
-.center {
-  text-align: center;
+.icon {
+  grid-area: icon;
+  height: 100%;
+  width: 100%;
 }
 
-.error {
-  color: hsl(0, 99%, 58%);
+.ingrTitle {
+  grid-area: title;
 }
 
-.image {
-  width: 107px;
-  height: 102px;
-  margin: 60px 0;
+.price {
+  grid-area: price;
+}
+
+.date {
+  grid-area: date;
+}
+
+.price {
+  grid-area: price;
 }

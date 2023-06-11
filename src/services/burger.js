@@ -95,22 +95,20 @@ export const useBunAndTotalPrice = () => {
 };
 
 const componentsCountSelector = createSelector(
-  (state) => state.burger.bun,
-  (state) => state.burger.components,
-  (_, id) => id,
-  (bun, components, id) => {
+  [
+    (state) => [state.burger.bun, state.burger.components],
+    (_, id) => id,
+  ],
+  ([bun, components], id) => {
     if (bun?._id === id) {
       return 1;
     }
-    return components.reduce(
-      (count, el) => count + (el._id === id ? 1 : 0),
-      0
-    );
+    return components.reduce((count, el) => count + (el._id === id ? 1 : 0), 0);
   }
 );
 
 export const useUsedComponentCount = (id) => {
-  return useSelector(componentsCountSelector);
+  return useSelector((state) => componentsCountSelector(state, id));
 };
 
 export default burgerSlice.reducer;

@@ -15,6 +15,12 @@
   z-index: 9001;
 
   transform: translateX(-50%) translateY(-50%);
+
+  box-sizing: border-box;
+  max-height: calc(100vh - 40px);
+
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .header {

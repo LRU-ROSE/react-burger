@@ -1,6 +1,6 @@
 import { ProfileIcon, ListIcon, BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { combineClasses } from '../../utils';
+import { cx } from '../../utils';
 
 import cs from './styles.module.css';
 import { Link, useLocation } from 'react-router-dom';
@@ -26,7 +26,7 @@ const AppHeaderLink = ({ text, href, pathExact = false, iconName, className = nu
       break;
   }
   return (
-    <Link to={href} className={combineClasses(cs.link, className)}>
+    <Link to={href} className={cx(cs.link, className)}>
       {iconEl}
       <p className={`text text_type_main-default${ active ? '' : ' text_color_inactive'}`}>
         {text}

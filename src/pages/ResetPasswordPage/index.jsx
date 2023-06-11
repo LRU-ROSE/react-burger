@@ -6,7 +6,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, Navigate } from "react-router-dom";
-import { combineClasses } from "../../utils";
+import { cx } from "../../utils";
 import { useEndResetPasswordMutation } from "../../services/api/authApi";
 import { useResettingPassword } from "../../services/auth";
 
@@ -25,7 +25,6 @@ const ResetPasswordPage = () => {
     resetPassword({ password, token });
   };
 
-
   if (result.isSuccess) {
     return <Navigate to="/login" replace />;
   }
@@ -38,7 +37,7 @@ const ResetPasswordPage = () => {
   if (result.isError) {
     errorEl = (
       <p
-        className={combineClasses(
+        className={cx(
           "text text_type_main-small text_color_inactive mt-4",
           cs.error
         )}

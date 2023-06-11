@@ -1,0 +1,8 @@
+.status {
+  margin: 0;
+  padding: 0;
+}
+
+.statusDone {
+  color: #00CCCC;
+}

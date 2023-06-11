@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { combineClasses } from "../../utils";
+import { cx } from "../../utils";
 import cs from "./styles.module.css";
 import IngredientDetails from "../../components/IngredientDetails";
 import { useGetIngredientsQuery } from "../../services/api/ingredientsApi";
@@ -13,7 +13,7 @@ const IngredientsPage = () => {
   } else if (error) {
     content = (
       <p
-        className={combineClasses("text text_type_main-medium mt-6", cs.error)}
+        className={cx("text text_type_main-medium mt-6", cs.error)}
       >{`Ошибка: ${error}`}</p>
     );
   } else {
@@ -23,7 +23,7 @@ const IngredientsPage = () => {
     } else {
       content = (
         <p
-          className={combineClasses(
+          className={cx(
             "text text_type_main-medium mt-6",
             cs.error
           )}

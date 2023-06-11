@@ -1,9 +1,9 @@
-import { combineClasses } from "../../utils";
+import { cx } from "../../utils";
 import cs from "./styles.module.css";
 
 const NotFoundPage = () => {
   return (
-    <h2 className={combineClasses("text text_type_main-medium", cs.text)}>
+    <h2 className={cx("text text_type_main-medium", cs.text)}>
       Страница не найдена
     </h2>
   );
