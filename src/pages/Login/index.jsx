@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, Navigate, useSearchParams } from "react-router-dom";
 import { useLoginMutation } from "../../services/api/authApi";
-import { combineClasses } from "../../utils";
+import { cx } from "../../utils";
 
 const LoginPage = () => {
   const [returnPath] = useSearchParams('return');
@@ -31,7 +31,7 @@ const LoginPage = () => {
   if (result.isError) {
     errorEl = (
       <p
-        className={combineClasses(
+        className={cx(
           "text text_type_main-small text_color_inactive mt-4",
           cs.error
         )}

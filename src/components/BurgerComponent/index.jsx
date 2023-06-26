@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from "react-redux";
 import IngredientType from "../../types/Ingredient";
-import { combineClasses } from "../../utils";
+import { cx } from "../../utils";
 
 import cs from "./styles.module.css";
 import { bunType } from "../../helpers/ingredientTypes";
@@ -63,7 +63,7 @@ const BurgerComponent = ({
 
   return (
     <div
-      className={combineClasses(
+      className={cx(
         "pr-4",
         cs.component,
         isTemp && cs.tempComponent,
@@ -76,7 +76,7 @@ const BurgerComponent = ({
       ref={elRef}
     >
       <div
-        className={combineClasses(
+        className={cx(
           "mr-2",
           cs.dragIcon,
           isLocked ? cs.hidden : ""

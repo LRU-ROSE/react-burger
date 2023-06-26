@@ -1,0 +1,42 @@
+.icon {
+  box-sizing: border-box;
+  background: linear-gradient(45deg, #801AB2, #4C4CFF);
+  border-radius: 100px;
+  display: grid;
+  grid-template: "data" 1fr / 1fr;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.icon::before {
+  content: "";
+  grid-area: data;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  background: #131316;
+  border-radius: 100px;
+  z-index: 1;
+}
+
+.icon[data-more]::after {
+  content: "+" attr(data-more);
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: data;
+  background: #1C1C2199;
+  z-index: 3;
+}
+
+.image {
+  grid-area: data;
+  width: 100%;
+  height: 87.5%;
+  object-fit: cover;
+  z-index: 2;
+}

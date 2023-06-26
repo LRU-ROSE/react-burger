@@ -1,33 +1,28 @@
 import { useParams } from "react-router-dom";
-import { combineClasses } from "../../utils";
+import { cx } from "../../utils";
 import cs from "./styles.module.css";
 import IngredientDetails from "../../components/IngredientDetails";
 import { useGetIngredientsQuery } from "../../services/api/ingredientsApi";
+import LoadingMessage from "../../components/LoadingMessage";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const IngredientsPage = () => {
   const { id } = useParams();
   const { data, error, isLoading } = useGetIngredientsQuery();
   let content;
   if (isLoading) {
-    content = <p className="text text_type_main-medium mt-6">Загрузка...</p>;
+    content = <LoadingMessage />;
   } else if (error) {
-    content = (
-      <p
-        className={combineClasses("text text_type_main-medium mt-6", cs.error)}
-      >{`Ошибка: ${error}`}</p>
-    );
+    content = <ErrorMessage error={error} />;
   } else {
     const elData = data?.byId[id];
     if (elData) {
       content = <IngredientDetails data={elData} />;
     } else {
       content = (
-        <p
-          className={combineClasses(
-            "text text_type_main-medium mt-6",
-            cs.error
-          )}
-        >Ошибка: ингредиент не найден</p>
+        <p className={cx("text text_type_main-medium mt-6", cs.error)}>
+          Ошибка: ингредиент не найден
+        </p>
       );
     }
   }

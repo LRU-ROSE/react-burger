@@ -15,6 +15,10 @@ import ForgotPasswordPage from "../../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../../pages/ResetPasswordPage";
 import ProfilePage from "../../pages/ProfilePage";
 import NotFoundPage from "../../pages/NotFoundPage";
+import OrdersFeedPage from "../../pages/OrdersFeedPage";
+import OrdersHistoryPage from "../../pages/OrdersHistoryPage";
+import FeedDetailsPage from "../../pages/FeedDetailsPage";
+import HistoryDetailsPage from "../../pages/HistoryDetailsPage";
 
 const App = () => {
   const navigate = useNavigate();
@@ -41,12 +45,14 @@ const App = () => {
   }, [realLocation.pathname]);
   return (
     <>
-      <AppHeader />
       <Provider store={store}>
         <ModalProvider controlsRef={modalControls}>
+          <AppHeader />
           <DndProvider backend={HTML5Backend}>
             <Routes location={realLocation}>
               <Route path="/" element={<ConstructorPage />} />
+              <Route path="/feed" element={<OrdersFeedPage />} />
+              <Route path="/feed/:id" element={<FeedDetailsPage />} />
               <Route path="/ingredients/:id" element={<IngredientsPage />} />
               <Route
                 path="/login"
@@ -81,6 +87,15 @@ const App = () => {
                   </ProtectedRouteElement>
                 }
               />
+              <Route
+                path="/profile/orders"
+                element={
+                  <ProtectedRouteElement needAuth={true}>
+                    <OrdersHistoryPage />
+                  </ProtectedRouteElement>
+                }
+              />
+              <Route path="/profile/orders/:id" element={<HistoryDetailsPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </DndProvider>

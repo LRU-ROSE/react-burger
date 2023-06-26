@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import cs from './styles.module.css';
-import { combineClasses } from '../../utils';
+import { cx } from '../../utils';
 
 const Modal = ({title, onClose, visible, children}) => {
   const modal = useRef();
@@ -21,7 +21,7 @@ const Modal = ({title, onClose, visible, children}) => {
   }, [visible]);
 
   return (
-    <div className={combineClasses(cs.modal, visible ? '' : cs.hidden)} onKeyDown={handleEsc} ref={modal} tabIndex='0'>
+    <div className={cx(cs.modal, visible ? '' : cs.hidden)} onKeyDown={handleEsc} ref={modal} tabIndex='0'>
       <div className={cs.header}>
         <h2 className='text text_type_main-large'>{title}</h2>
         <button type='button' className={cs.close} onClick={onClose}>

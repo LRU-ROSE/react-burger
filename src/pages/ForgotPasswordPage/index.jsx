@@ -6,7 +6,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, Navigate } from "react-router-dom";
-import { combineClasses } from "../../utils";
+import { cx } from "../../utils";
 import { useStartResetPasswordMutation } from "../../services/api/authApi";
 
 const ForgotPasswordPage = () => {
@@ -25,7 +25,7 @@ const ForgotPasswordPage = () => {
   if (result.isError) {
     errorEl = (
       <p
-        className={combineClasses(
+        className={cx(
           "text text_type_main-small text_color_inactive mt-4",
           cs.error
         )}

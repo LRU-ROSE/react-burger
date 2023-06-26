@@ -1,1 +1,1 @@
-export const combineClasses = (...args) => args.filter((arg) => arg).join(' ');
+export const cx = (...args) => args.filter((arg) => arg).join(" ");

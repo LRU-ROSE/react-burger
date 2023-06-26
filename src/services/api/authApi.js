@@ -14,7 +14,7 @@ export const authApi = createApi({
       }),
       transformResponse: (response) => {
         return {
-          accessToken: response.accessToken,
+          accessToken: response.accessToken.split(' ')[1],
           refreshToken: response.refreshToken,
         };
       },
@@ -58,7 +58,7 @@ export const authApi = createApi({
       }),
       transformResponse: (response) => {
         return {
-          accessToken: response.accessToken,
+          accessToken: response.accessToken.split(' ')[1],
           refreshToken: response.refreshToken,
         };
       },

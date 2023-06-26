@@ -1,13 +1,15 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useCallback, useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { combineClasses } from "../../utils";
+import { cx } from "../../utils";
 import IngredientsSection from "../IngredientsSection";
 
 import cs from "./styles.module.css";
 import { useGetIngredientsQuery } from "../../services/api/ingredientsApi";
 import { setDefaultBun } from "../../services/burger";
 import { bunType, ingredientTypes } from "../../helpers/ingredientTypes";
+import LoadingMessage from "../LoadingMessage";
+import ErrorMessage from "../ErrorMessage";
 
 const BurgerIngredients = () => {
   const scroller = useRef();
@@ -45,11 +47,16 @@ const BurgerIngredients = () => {
   }, []);
 
   if (isLoading) {
-    return "Загрузка...";
+    return <LoadingMessage />;
   }
 
   if (error) {
-    return `Ошибка: ${error}`;
+    return (
+      <ErrorMessage
+        message="Ошибка получения компонентов"
+        error={error}
+      />
+    );
   }
 
   const tabs = ingredientTypes.map(([typeName, typeDesc], idx) => {
@@ -81,9 +88,9 @@ const BurgerIngredients = () => {
   return (
     <section className={cs.ingredients}>
       <h1 className="text text_type_main-large mt-10">Соберите бургер</h1>
-      <div className={combineClasses("mt-5", cs.tabs)}>{tabs}</div>
+      <div className={cx("mt-5", cs.tabs)}>{tabs}</div>
       <div
-        className={combineClasses("mt-10", cs.sections)}
+        className={cx("mt-10", cs.sections)}
         onScroll={handleScroll}
         ref={scroller}
       >

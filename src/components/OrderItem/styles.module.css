@@ -1,0 +1,78 @@
+.link {
+  color: inherit;
+  text-decoration: inherit;
+  margin: 0;
+  padding: 24px;
+  display: grid;
+  grid-template:
+  "number  .      date   date   date  "
+  ".       .      .      .      .     " 24px
+  "name    name   name   name   name  "
+  "status  status status status status"
+  ".       .      .      .      .     " 24px
+  "ingrs   ingrs  ingrs  .      price "
+  / auto 1fr auto 24px auto;
+  background-color: #1C1C21;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px;
+  transition: background-color 0.15s ease;
+}
+
+.link:hover {
+  background: #2F2F37;
+}
+
+.item {
+  display: contents;
+}
+
+.number {
+  grid-area: number;
+}
+
+.date {
+  grid-area: date;
+  align-self: end;
+}
+
+.name {
+  grid-area: name;
+}
+
+.status {
+  margin: 8px 0 0 0;
+  grid-area: status;
+}
+
+.statusDone {
+  color: #00CCCC;
+}
+
+.ingredients {
+  grid-area: ingrs;
+  list-style: none;
+  display: flex;
+  flex-flow: row-reverse nowrap;
+  justify-content: start;
+  margin: 0;
+  padding: 0;
+}
+
+.ingredient:not(:last-child) {
+  margin-left: -16px;
+}
+
+.ingredient {
+  width: 64px;
+  height: 64px;
+  z-index: 1;
+}
+
+.ingredientIcon {
+  width: 100%;
+  height: 100%;
+}
+
+.price {
+  grid-area: price;
+}
