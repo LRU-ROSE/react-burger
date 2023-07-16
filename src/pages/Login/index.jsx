@@ -8,6 +8,7 @@ import {
 import { NavLink, Navigate, useSearchParams } from "react-router-dom";
 import { useLoginMutation } from "../../services/api/authApi";
 import { cx } from "../../utils";
+import { getErrorMessage } from "../../helpers/UserRequiredError";
 
 const LoginPage = () => {
   const [returnPath] = useSearchParams('return');
@@ -36,7 +37,7 @@ const LoginPage = () => {
           cs.error
         )}
       >
-        {result.error.toString()}
+        {getErrorMessage(result.error)}
       </p>
     );
   }
