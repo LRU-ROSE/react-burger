@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, FormEvent } from "react";
 
 import cs from "./styles.module.css";
 import {
@@ -20,7 +20,7 @@ const LoginPage = () => {
   }, [pasVisible]);
 
   const [login, result] = useLoginMutation();
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     login({ email, password });
   };

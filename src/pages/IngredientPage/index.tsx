@@ -15,7 +15,7 @@ const IngredientsPage = () => {
   } else if (error) {
     content = <ErrorMessage error={error} />;
   } else {
-    const elData = data?.byId[id];
+    const elData = id && data?.byId[id];
     if (elData) {
       content = <IngredientDetails data={elData} />;
     } else {

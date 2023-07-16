@@ -19,9 +19,11 @@ export const userApi = createApi({
         } catch {}
       },
     }),
-    getUser: builder.query({
+    getUser: builder.query<{ name?: string; email?: string }, void>({
       query: () => "auth/user",
-      transformResponse: (response: { user: { name?: string, email?: string }}) => {
+      transformResponse: (response: {
+        user: { name?: string; email?: string };
+      }) => {
         return response.user;
       },
     }),
@@ -33,9 +35,11 @@ export const userApi = createApi({
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
-          const { data: { user: updatedUser } } = await queryFulfilled;
+          const {
+            data: { user: updatedUser },
+          } = await queryFulfilled;
           dispatch(
-            userApi.util.updateQueryData('getUser', undefined, (draft) => {
+            userApi.util.updateQueryData("getUser", undefined, (draft) => {
               Object.assign(draft, updatedUser);
             })
           );
@@ -45,4 +49,5 @@ export const userApi = createApi({
   }),
 });
 
-export const { useSendOrderMutation, useUpdateUserMutation, useGetUserQuery } = userApi;
+export const { useSendOrderMutation, useUpdateUserMutation, useGetUserQuery } =
+  userApi;

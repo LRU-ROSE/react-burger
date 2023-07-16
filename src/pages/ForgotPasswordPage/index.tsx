@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 import cs from "./styles.module.css";
 import {
@@ -13,7 +13,7 @@ const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
 
   const [resetPassword, result] = useStartResetPasswordMutation();
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     resetPassword({ email });
   };

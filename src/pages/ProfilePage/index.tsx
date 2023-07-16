@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { FormEvent, useEffect } from "react";
 
 import {
   Button,
@@ -10,7 +10,10 @@ import {
   useUpdateUserMutation,
 } from "../../services/api/userApi";
 import useTrackedInput from "../../helpers/useTrackedInput";
-import { isUserRequiredError } from "../../helpers/UserRequiredError";
+import {
+  getErrorMessage,
+  isUserRequiredError,
+} from "../../helpers/UserRequiredError";
 import GotoLogin from "../../components/GotoLogin";
 
 import cs from "./styles.module.css";
@@ -37,9 +40,9 @@ const ProfilePage = () => {
   }, [userData]);
 
   const [updateUser, updateResult] = useUpdateUserMutation();
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const data = {};
+    const data: { name?: string; email?: string; password?: string } = {};
     if (login.isChanged()) {
       data.email = login.props.value;
     }
@@ -72,7 +75,7 @@ const ProfilePage = () => {
           cs.error
         )}
       >
-        {(error.error ?? error)?.toString()}
+        {getErrorMessage(error)}
       </p>
     );
   }

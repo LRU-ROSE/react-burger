@@ -9,7 +9,7 @@ export const ordersApi = createApi({
   baseQuery,
   reducerPath: "ordersApi",
   endpoints: (builder) => ({
-    getOrders: builder.query({
+    getOrders: builder.query<OrderType[], void>({
       queryFn: async () => ({ data: [] }),
       async onCacheEntryAdded(_args, api) {
         const { cacheDataLoaded, cacheEntryRemoved, updateCachedData } = api;
@@ -20,7 +20,7 @@ export const ordersApi = createApi({
           api as any as BaseQueryApi,
           (data: { orders: OrderType[] }) => {
             console.log(data);
-            updateCachedData((draft: OrderType[]) => {
+            updateCachedData((draft) => {
               draft.length = 0;
               draft.push(...data.orders);
             });
@@ -36,7 +36,7 @@ export const ordersApi = createApi({
         close(1000);
       },
     }),
-    getAllOrders: builder.query({
+    getAllOrders: builder.query<OrderType[], void>({
       queryFn: async () => ({ data: [] }),
       async onCacheEntryAdded(args, api) {
         const { cacheDataLoaded, cacheEntryRemoved, updateCachedData } = api;
@@ -44,7 +44,7 @@ export const ordersApi = createApi({
         const ws = new WebSocket("wss://norma.nomoreparties.space/orders/all");
         ws.onmessage = (e) => {
           const data = JSON.parse(e.data);
-          updateCachedData((draft: OrderType[]) => {
+          updateCachedData((draft) => {
             draft.length = 0;
             draft.push(...data.orders);
           });

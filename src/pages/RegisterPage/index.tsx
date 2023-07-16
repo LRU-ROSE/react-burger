@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, FormEvent } from "react";
 
 import cs from "./styles.module.css";
 import {
@@ -6,33 +6,27 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, Navigate } from "react-router-dom";
+import { useRegisterMutation } from "../../services/api/authApi";
 import { cx } from "../../utils";
-import { useEndResetPasswordMutation } from "../../services/api/authApi";
-import { useResettingPassword } from "../../services/auth";
 
-const ResetPasswordPage = () => {
-  const isResetting = useResettingPassword();
-  const [token, setToken] = useState("");
+const RegisterPage = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pasVisible, setPasVisible] = useState(false);
   const changeType = useCallback(() => {
     setPasVisible(!pasVisible);
   }, [pasVisible]);
 
-  const [resetPassword, result] = useEndResetPasswordMutation();
-  const onSubmit = (e) => {
+  const [register, result] = useRegisterMutation();
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    resetPassword({ password, token });
+    register({ name, email, password });
   };
 
   if (result.isSuccess) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (!isResetting) {
     return <Navigate to="/" replace />;
   }
-
   let errorEl = null;
   if (result.isError) {
     errorEl = (
@@ -48,12 +42,32 @@ const ResetPasswordPage = () => {
   }
   return (
     <form action="#" method="post" className={cs.form} onSubmit={onSubmit}>
-      <h2 className="text text_type_main-medium">Восстановление пароля</h2>
+      <h2 className="text text_type_main-medium">Регистрация</h2>
       {errorEl}
+      <Input
+        type="text"
+        required
+        placeholder="Имя"
+        onChange={(e) => setName(e.target.value)}
+        value={name}
+        name={"name"}
+        size={"default"}
+        extraClass="mt-6"
+      />
+      <Input
+        type="email"
+        required
+        placeholder="E-mail"
+        onChange={(e) => setEmail(e.target.value)}
+        value={email}
+        name={"email"}
+        size={"default"}
+        extraClass="mt-6"
+      />
       <Input
         type={pasVisible ? "text" : "password"}
         required
-        placeholder="Введите новый пароль"
+        placeholder="Пароль"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
         name={"password"}
@@ -62,21 +76,11 @@ const ResetPasswordPage = () => {
         onIconClick={changeType}
         extraClass="mt-6"
       />
-      <Input
-        type="text"
-        required
-        placeholder="Введите код из письма"
-        onChange={(e) => setToken(e.target.value)}
-        value={token}
-        name={"token"}
-        size={"default"}
-        extraClass="mt-6"
-      />
       <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
-        Сохранить
+        Зарегистрироваться
       </Button>
       <p className="text text_type_main-small text_color_inactive mt-20">
-        Вспомнили пароль?{" "}
+        Уже зарегистрированы?{" "}
         <NavLink className={cs.link} to="/login">
           Войти
         </NavLink>
@@ -85,4 +89,4 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default ResetPasswordPage;
+export default RegisterPage;

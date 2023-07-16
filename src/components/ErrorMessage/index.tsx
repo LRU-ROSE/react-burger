@@ -7,7 +7,7 @@ import { SerializedError } from "@reduxjs/toolkit";
 type Props = {
   className?: string;
   error: FetchBaseQueryError | SerializedError | undefined;
-  message: string;
+  message?: string;
 };
 
 const ErrorMessage = ({ className, error, message = 'Ошибка'}: Props) => {

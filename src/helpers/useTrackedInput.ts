@@ -1,3 +1,4 @@
+import { TICons } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 import { useState, useRef, useCallback, useEffect, ChangeEvent } from "react";
 
 type TrackedData = {
@@ -51,7 +52,7 @@ const useTrackedInput = () => {
       onChange: handleChange,
       value: data.currentVal,
       onIconClick: toggleEditState,
-      icon: data.editEnabled ? "CloseIcon" : "EditIcon",
+      icon: (data.editEnabled ? "CloseIcon" : "EditIcon") as keyof TICons,
       ref: inputRef,
     },
     isChanged: () => data.editEnabled && data.currentVal !== data.initVal,
