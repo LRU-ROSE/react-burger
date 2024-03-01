@@ -30,7 +30,7 @@
 
 Перейдите в папку, где будет развернут проект. После чего клонируйте его с GitHub:
 ```sh
-git clone [https://github.com/LRU-ROSE/mesto-project.git](https://github.com/LRU-ROSE/react-burger.git)
+git clone https://github.com/LRU-ROSE/mesto-project.git](https://github.com/LRU-ROSE/react-burger.git
 ```
 
 Переходим в папку с проектом и устанавливаем компоненты:
